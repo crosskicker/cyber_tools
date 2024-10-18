@@ -38,3 +38,15 @@ def packet_callback2(packet):
 
 #capture sur une carte réseau specified
 sniff(iface="lo", count=5, prn=lambda x: x.summary())
+
+# Envoyer un paquet ICMP (ping)
+send(IP(dst="192.168.1.1")/ICMP())
+
+
+# Envoyer un ping et attendre une réponse
+ans, unans = sr(IP(dst="192.168.1.1")/ICMP())
+ans.summary()
+
+# Envoyer un ARP request en broadcast pour découvrir des hôtes sur le réseau
+ans, unans = srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst="192.168.1.1/24"), timeout=2)
+ans.summary()
