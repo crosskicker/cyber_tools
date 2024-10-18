@@ -10,10 +10,8 @@ def get_mac(ip):
     """Returns MAC address of any device connected to the network"""
 
     #srp => send packet and keep listening for response
-    ans,_ = srp(Ether(dst='ff:ff:ff:ff:ff:ff')/ARP(pdst=ip),timeout=3,verbose=0)
-
-    if ans:
-        return[0][1].src
+    res = srp(Ether(dst='ff:ff:ff:ff:ff:ff')/ARP(pdst=ip),timeout=3,verbose=False)[0]
+    return res[0][1].hwsrc
 
 def spoof(target_ip,host_ip,verbose=True):
     """ARP poisonning"""
